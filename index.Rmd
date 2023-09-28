@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to the number of times "women" or "gender" is mentioned in new policies under authoritarian regimes. Through this, I aim to discover which authoritarian regimes tend to appeal to gender policies than others, as well as in correlation to which type of policies (political, economic, or social rights of women.
+I am interested in exploring data related to the number of times "women" or "gender" is mentioned in new policies under authoritarian regimes. Through this, I aim to discover which authoritarian regimes tend to appeal to gender policies than others, as well as in correlation to which type of policies (political, economic, or social rights of women).
