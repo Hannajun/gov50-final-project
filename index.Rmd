@@ -12,3 +12,14 @@ output:
 ## Project thoughts
 
 I am interested in exploring data related to the number of times "women" or "gender" is mentioned in new policies under authoritarian regimes. Through this, I aim to discover which authoritarian regimes tend to appeal to gender policies than others, as well as in correlation to which type of policies (political, economic, or social rights of women).
+
+##Research Proposal
+
+Do gender quotas under authoritarian regimes positively affect women's economic participation? This study draws upon existing literature that investigates authoritarian regime's incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. Accordingly, I seek to investigate the efficacy of gender quotas under such regimes and discover if the policies go beyond mere signaling. I hypothesize that that gender quotas will not have significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. My sample, drawn from the World Development Indicators by the World Bank, is comprised of all countries from 1960 to 2022. My unit of analysis is by country and year. My explanatory variable of interest is the 'Proportion of seats held by women in national parliaments (%),' which I will compare with the country's gender quota policy, if applicable. My outcome variable of interest is the change in women's economic status, measured by the 'Women Business and the Law Index Score.' I will then compare these results by their relative polity score. If I observe little change in the economic status of women despite increase in the number of women in parliament, this would provide support for my hypothesis. If I observe an increase in the economic status of women along with the increase of women in parliament, the evidence would counter my hypothesis. 
+
+
+```{r}
+library(tidyverse)
+wb_gender <- read_csv("data/wb_gender.csv.csv")
+polity <- read_csv("data/polity.csv")
+```
