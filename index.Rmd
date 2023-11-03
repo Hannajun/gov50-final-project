@@ -23,3 +23,179 @@ library(tidyverse)
 wb_gender <- read_csv("data/wb_gender.csv.csv")
 polity <- read_csv("data/polity.csv")
 ```
+
+
+```{r}
+wb_gender_tenyears <- wb_gender |>
+  drop_na() |>
+  select(`Country Name`, `Country Code`, `Series Name`, `2012 [YR2012]`:`2022 [YR2022]`)
+```
+
+```{r}
+wb_gender_2012 <- wb_gender_tenyears |>
+  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)") |>
+  pivot_wider(
+    names_from = `Series Name`,
+    values_from = `2012 [YR2012]`:`2022 [YR2022]`
+  ) |>
+  select(`Country Name`, `Country Code`,`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`, `2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`) |>
+  mutate(prop_seats_women = as.integer(`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`),
+         WBL_score = as.integer(`2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`))
+wb_gender_2012
+```
+
+```{r}
+wb_gender_2012 |>
+  ggplot(aes(x = prop_seats_women,
+             y = WBL_score)) +
+  geom_point() +
+  geom_smooth()
+```
+
+
+```{r}
+cor(wb_gender_2012$prop_seats_women, wb_gender_2012$WBL_score,
+    use = "pairwise")
+```
+
+```{r}
+wb_gender_2022 <- wb_gender_tenyears |>
+  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)") |>
+  pivot_wider(
+    names_from = `Series Name`,
+    values_from = `2012 [YR2012]`:`2022 [YR2022]`
+  ) |>
+  select(`Country Name`, `Country Code`,`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`, `2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`) |>
+  mutate(prop_seats_women = as.integer(`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`),
+         WBL_score = as.integer(`2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`))
+wb_gender_2022
+```
+
+```{r}
+wb_gender_2022 |>
+  ggplot(aes(x = prop_seats_women,
+             y = WBL_score)) +
+  geom_point() +
+  geom_smooth()
+```
+```{r}
+cor(wb_gender_2022$prop_seats_women, wb_gender_2022$WBL_score,
+    use = "pairwise")
+```
+```{r}
+piv_gen_year <- wb_gender |>
+  select(`Country Name`, `Country Code`, `Series Name`, `1990 [YR1990]`:`2016 [YR2016]`) |>
+  rename("1990" = `1990 [YR1990]`,
+         "1991" = `1991 [YR1991]`,
+         "1992" = `1992 [YR1992]`,
+         "1993" = `1993 [YR1993]`,
+         "1994" = `1994 [YR1994]`,
+         "1995" = `1995 [YR1995]`,
+         "1996" = `1996 [YR1996]`,
+         "1997" = `1997 [YR1997]`,
+         "1998" = `1998 [YR1998]`,
+         "1999" = `1999 [YR1999]`,
+         "2000" = `2000 [YR2000]`,
+         "2001" = `2001 [YR2001]`,
+         "2002" = `2002 [YR2002]`,
+         "2003" = `2003 [YR2003]`,
+         "2004" = `2004 [YR2004]`,
+         "2005" = `2005 [YR2005]`,
+         "2006" = `2006 [YR2006]`,
+         "2007" = `2007 [YR2007]`,
+         "2008" = `2008 [YR2008]`,
+         "2009" = `2009 [YR2009]`,
+         "2010" = `2010 [YR2010]`,
+         "2011" = `2011 [YR2011]`,
+         "2012" = `2012 [YR2012]`,
+         "2013" = `2013 [YR2013]`,
+         "2014" = `2014 [YR2014]`,
+         "2015" = `2015 [YR2015]`,
+         "2016" = `2016 [YR2016]`) |>
+  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" |
+           `Series Name` == "Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"
+  ) |>
+  pivot_longer(
+    cols= `1990` : `2016`,
+    names_to = "year",
+    values_to = "indicator"
+  ) |>
+  pivot_wider(
+    names_from = `Series Name`,
+    values_from = indicator
+  )
+piv_gen_year        
+```
+
+
+```{r}
+piv_gen_year <- piv_gen_year |>
+  mutate(year = as.integer(year))
+piv_gen_year
+```
+
+```{r}
+polity <- polity |>
+  mutate(year = as.integer(year))
+polity
+```
+
+
+```{r}
+join_gen_pol <- piv_gen_year |>
+  inner_join(polity, by = c("Country Code", "year"))
+join_gen_pol
+```
+
+```{r}
+join_gen_pol <- join_gen_pol |>
+  rename(prop_female_seats = `Proportion of seats held by women in national parliaments (%)`,
+         labor_female = `Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`)
+```
+
+```{r}
+join_gen_pol |>
+  ggplot(aes(x = prop_female_seats, y = labor_female)) +
+  geom_point()
+```
+
+```{r}
+join_gen_pol |>
+  mutate(prop_female_seats = as.integer(prop_female_seats),
+         labor_female = as.integer(labor_female)) |>
+  ggplot(aes(x = labor_female)) +
+  geom_histogram()
+```
+
+```{r}
+join_gen_pol |>
+  mutate(prop_female_seats = as.integer(prop_female_seats),
+         labor_female = as.integer(labor_female)) |>
+  ggplot(aes(x = prop_female_seats, y = labor_female)) +
+  geom_point() +
+  geom_smooth() +
+  labs(
+    x = "Proportion of women in national parliament",
+    y = "Labor force participation of females",
+    title = "Women in Politics and the Economy"
+  )
+```
+
+```{r}
+join_gen_pol_int <- join_gen_pol |>
+  mutate(prop_female_seats = as.integer(prop_female_seats),
+         labor_female = as.integer(labor_female))
+```
+
+```{r}
+join_gen_pol_int |>
+  mutate(regime_type = case_when(
+    polity_score < -5 ~ "Authoritarian",
+    polity_score >= -5 & polity_score < 6 ~ "Anocracy",
+    polity_score > 5 ~ "Democracy"
+  )) |>
+  ggplot(aes(x = prop_female_seats, y = labor_female)) +
+  geom_point() +
+  facet_wrap(~regime_type)
+```
+
