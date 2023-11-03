@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/535e491d-44c2-4e4b-b500-423a15784a21_Series - Metadata.csv","data/polity.csv","data/wb_gender.csv.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/535e491d-44c2-4e4b-b500-423a15784a21_Series - Metadata.csv","data/polity.csv","data/wb_gender.csv.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-14-1.png","index_files/figure-html5/unnamed-chunk-15-1.png","index_files/figure-html5/unnamed-chunk-16-1.png","index_files/figure-html5/unnamed-chunk-18-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1528,7 +1528,316 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='va'>polity</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/polity.csv"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb_gender_tenyears</span> <span class='op'>&lt;-</span> <span class='va'>wb_gender</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>`Country Name`</span>, <span class='va'>`Country Code`</span>, <span class='va'>`Series Name`</span>, <span class='va'>`2012 [YR2012]`</span><span class='op'>:</span><span class='va'>`2022 [YR2022]`</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb_gender_2012</span> <span class='op'>&lt;-</span> <span class='va'>wb_gender_tenyears</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>`Series Name`</span> <span class='op'>==</span> <span class='st'>"Proportion of seats held by women in national parliaments (%)"</span> <span class='op'>|</span> <span class='va'>`Series Name`</span> <span class='op'>==</span> <span class='st'>"Women Business and the Law Index Score (scale 1-100)"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span></span>
+<span>    names_from <span class='op'>=</span> <span class='va'>`Series Name`</span>,</span>
+<span>    values_from <span class='op'>=</span> <span class='va'>`2012 [YR2012]`</span><span class='op'>:</span><span class='va'>`2022 [YR2022]`</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>`Country Name`</span>, <span class='va'>`Country Code`</span>,<span class='va'>`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`</span>, <span class='va'>`2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_seats_women <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`</span><span class='op'>)</span>,</span>
+<span>         WBL_score <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>`2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>wb_gender_2012</span></span></code></pre>
+</div>
+<pre><code># A tibble: 266 × 6
+   `Country Name`      `Country Code` 2012 [YR2012]_Proportion of se…¹
+   &lt;chr&gt;               &lt;chr&gt;          &lt;chr&gt;                           
+ 1 Afghanistan         AFG            27.710843373494                 
+ 2 Albania             ALB            15.7142857142857                
+ 3 Algeria             DZA            31.6017316017316                
+ 4 American Samoa      ASM            ..                              
+ 5 Andorra             AND            50                              
+ 6 Angola              AGO            34.0909090909091                
+ 7 Antigua and Barbuda ATG            10.5263157894737                
+ 8 Argentina           ARG            37.3540856031128                
+ 9 Armenia             ARM            10.6870229007634                
+10 Aruba               ABW            ..                              
+# ℹ 256 more rows
+# ℹ abbreviated name:
+#   ¹​`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`
+# ℹ 3 more variables:
+#   `2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)` &lt;chr&gt;,
+#   prop_seats_women &lt;int&gt;, WBL_score &lt;int&gt;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb_gender_2012</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_seats_women</span>,</span>
+<span>             y <span class='op'>=</span> <span class='va'>WBL_score</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>wb_gender_2012</span><span class='op'>$</span><span class='va'>prop_seats_women</span>, <span class='va'>wb_gender_2012</span><span class='op'>$</span><span class='va'>WBL_score</span>,</span>
+<span>    use <span class='op'>=</span> <span class='st'>"pairwise"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 0.4657048</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb_gender_2022</span> <span class='op'>&lt;-</span> <span class='va'>wb_gender_tenyears</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>`Series Name`</span> <span class='op'>==</span> <span class='st'>"Proportion of seats held by women in national parliaments (%)"</span> <span class='op'>|</span> <span class='va'>`Series Name`</span> <span class='op'>==</span> <span class='st'>"Women Business and the Law Index Score (scale 1-100)"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span></span>
+<span>    names_from <span class='op'>=</span> <span class='va'>`Series Name`</span>,</span>
+<span>    values_from <span class='op'>=</span> <span class='va'>`2012 [YR2012]`</span><span class='op'>:</span><span class='va'>`2022 [YR2022]`</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>`Country Name`</span>, <span class='va'>`Country Code`</span>,<span class='va'>`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`</span>, <span class='va'>`2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_seats_women <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`</span><span class='op'>)</span>,</span>
+<span>         WBL_score <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>`2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>wb_gender_2022</span></span></code></pre>
+</div>
+<pre><code># A tibble: 266 × 6
+   `Country Name`      `Country Code` 2022 [YR2022]_Proportion of se…¹
+   &lt;chr&gt;               &lt;chr&gt;          &lt;chr&gt;                           
+ 1 Afghanistan         AFG            ..                              
+ 2 Albania             ALB            35.7142857142857                
+ 3 Algeria             DZA            8.10810810810811                
+ 4 American Samoa      ASM            ..                              
+ 5 Andorra             AND            46.4285714285714                
+ 6 Angola              AGO            33.6363636363636                
+ 7 Antigua and Barbuda ATG            11.1111111111111                
+ 8 Argentina           ARG            44.7470817120623                
+ 9 Armenia             ARM            35.5140186915888                
+10 Aruba               ABW            ..                              
+# ℹ 256 more rows
+# ℹ abbreviated name:
+#   ¹​`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`
+# ℹ 3 more variables:
+#   `2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)` &lt;chr&gt;,
+#   prop_seats_women &lt;int&gt;, WBL_score &lt;int&gt;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wb_gender_2022</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_seats_women</span>,</span>
+<span>             y <span class='op'>=</span> <span class='va'>WBL_score</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>wb_gender_2022</span><span class='op'>$</span><span class='va'>prop_seats_women</span>, <span class='va'>wb_gender_2022</span><span class='op'>$</span><span class='va'>WBL_score</span>,</span>
+<span>    use <span class='op'>=</span> <span class='st'>"pairwise"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 0.5601308</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>piv_gen_year</span> <span class='op'>&lt;-</span> <span class='va'>wb_gender</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>`Country Name`</span>, <span class='va'>`Country Code`</span>, <span class='va'>`Series Name`</span>, <span class='va'>`1990 [YR1990]`</span><span class='op'>:</span><span class='va'>`2016 [YR2016]`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span><span class='st'>"1990"</span> <span class='op'>=</span> <span class='va'>`1990 [YR1990]`</span>,</span>
+<span>         <span class='st'>"1991"</span> <span class='op'>=</span> <span class='va'>`1991 [YR1991]`</span>,</span>
+<span>         <span class='st'>"1992"</span> <span class='op'>=</span> <span class='va'>`1992 [YR1992]`</span>,</span>
+<span>         <span class='st'>"1993"</span> <span class='op'>=</span> <span class='va'>`1993 [YR1993]`</span>,</span>
+<span>         <span class='st'>"1994"</span> <span class='op'>=</span> <span class='va'>`1994 [YR1994]`</span>,</span>
+<span>         <span class='st'>"1995"</span> <span class='op'>=</span> <span class='va'>`1995 [YR1995]`</span>,</span>
+<span>         <span class='st'>"1996"</span> <span class='op'>=</span> <span class='va'>`1996 [YR1996]`</span>,</span>
+<span>         <span class='st'>"1997"</span> <span class='op'>=</span> <span class='va'>`1997 [YR1997]`</span>,</span>
+<span>         <span class='st'>"1998"</span> <span class='op'>=</span> <span class='va'>`1998 [YR1998]`</span>,</span>
+<span>         <span class='st'>"1999"</span> <span class='op'>=</span> <span class='va'>`1999 [YR1999]`</span>,</span>
+<span>         <span class='st'>"2000"</span> <span class='op'>=</span> <span class='va'>`2000 [YR2000]`</span>,</span>
+<span>         <span class='st'>"2001"</span> <span class='op'>=</span> <span class='va'>`2001 [YR2001]`</span>,</span>
+<span>         <span class='st'>"2002"</span> <span class='op'>=</span> <span class='va'>`2002 [YR2002]`</span>,</span>
+<span>         <span class='st'>"2003"</span> <span class='op'>=</span> <span class='va'>`2003 [YR2003]`</span>,</span>
+<span>         <span class='st'>"2004"</span> <span class='op'>=</span> <span class='va'>`2004 [YR2004]`</span>,</span>
+<span>         <span class='st'>"2005"</span> <span class='op'>=</span> <span class='va'>`2005 [YR2005]`</span>,</span>
+<span>         <span class='st'>"2006"</span> <span class='op'>=</span> <span class='va'>`2006 [YR2006]`</span>,</span>
+<span>         <span class='st'>"2007"</span> <span class='op'>=</span> <span class='va'>`2007 [YR2007]`</span>,</span>
+<span>         <span class='st'>"2008"</span> <span class='op'>=</span> <span class='va'>`2008 [YR2008]`</span>,</span>
+<span>         <span class='st'>"2009"</span> <span class='op'>=</span> <span class='va'>`2009 [YR2009]`</span>,</span>
+<span>         <span class='st'>"2010"</span> <span class='op'>=</span> <span class='va'>`2010 [YR2010]`</span>,</span>
+<span>         <span class='st'>"2011"</span> <span class='op'>=</span> <span class='va'>`2011 [YR2011]`</span>,</span>
+<span>         <span class='st'>"2012"</span> <span class='op'>=</span> <span class='va'>`2012 [YR2012]`</span>,</span>
+<span>         <span class='st'>"2013"</span> <span class='op'>=</span> <span class='va'>`2013 [YR2013]`</span>,</span>
+<span>         <span class='st'>"2014"</span> <span class='op'>=</span> <span class='va'>`2014 [YR2014]`</span>,</span>
+<span>         <span class='st'>"2015"</span> <span class='op'>=</span> <span class='va'>`2015 [YR2015]`</span>,</span>
+<span>         <span class='st'>"2016"</span> <span class='op'>=</span> <span class='va'>`2016 [YR2016]`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>`Series Name`</span> <span class='op'>==</span> <span class='st'>"Proportion of seats held by women in national parliaments (%)"</span> <span class='op'>|</span></span>
+<span>           <span class='va'>`Series Name`</span> <span class='op'>==</span> <span class='st'>"Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span></span>
+<span>    cols<span class='op'>=</span> <span class='va'>`1990`</span> <span class='op'>:</span> <span class='va'>`2016`</span>,</span>
+<span>    names_to <span class='op'>=</span> <span class='st'>"year"</span>,</span>
+<span>    values_to <span class='op'>=</span> <span class='st'>"indicator"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span></span>
+<span>    names_from <span class='op'>=</span> <span class='va'>`Series Name`</span>,</span>
+<span>    values_from <span class='op'>=</span> <span class='va'>indicator</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='va'>piv_gen_year</span>        </span></code></pre>
+</div>
+<pre><code># A tibble: 7,182 × 5
+   `Country Name` `Country Code` year  Proportion of seats held by w…¹
+   &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;                          
+ 1 Afghanistan    AFG            1990  ..                             
+ 2 Afghanistan    AFG            1991  ..                             
+ 3 Afghanistan    AFG            1992  ..                             
+ 4 Afghanistan    AFG            1993  ..                             
+ 5 Afghanistan    AFG            1994  ..                             
+ 6 Afghanistan    AFG            1995  ..                             
+ 7 Afghanistan    AFG            1996  ..                             
+ 8 Afghanistan    AFG            1997  ..                             
+ 9 Afghanistan    AFG            1998  ..                             
+10 Afghanistan    AFG            1999  ..                             
+# ℹ 7,172 more rows
+# ℹ abbreviated name:
+#   ¹​`Proportion of seats held by women in national parliaments (%)`
+# ℹ 1 more variable:
+#   `Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)` &lt;chr&gt;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>piv_gen_year</span> <span class='op'>&lt;-</span> <span class='va'>piv_gen_year</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>piv_gen_year</span></span></code></pre>
+</div>
+<pre><code># A tibble: 7,182 × 5
+   `Country Name` `Country Code`  year Proportion of seats held by w…¹
+   &lt;chr&gt;          &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;                          
+ 1 Afghanistan    AFG             1990 ..                             
+ 2 Afghanistan    AFG             1991 ..                             
+ 3 Afghanistan    AFG             1992 ..                             
+ 4 Afghanistan    AFG             1993 ..                             
+ 5 Afghanistan    AFG             1994 ..                             
+ 6 Afghanistan    AFG             1995 ..                             
+ 7 Afghanistan    AFG             1996 ..                             
+ 8 Afghanistan    AFG             1997 ..                             
+ 9 Afghanistan    AFG             1998 ..                             
+10 Afghanistan    AFG             1999 ..                             
+# ℹ 7,172 more rows
+# ℹ abbreviated name:
+#   ¹​`Proportion of seats held by women in national parliaments (%)`
+# ℹ 1 more variable:
+#   `Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)` &lt;chr&gt;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>polity</span> <span class='op'>&lt;-</span> <span class='va'>polity</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>`AFG`</span><span class='op'>:</span><span class='va'>`ZIM`</span>,</span>
+<span>    names_to <span class='op'>=</span> <span class='st'>"Country Code"</span>,</span>
+<span>    values_to <span class='op'>=</span> <span class='st'>"polity_score"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>polity</span></span></code></pre>
+</div>
+<pre><code># A tibble: 42,098 × 3
+    year `Country Code` polity_score
+   &lt;int&gt; &lt;chr&gt;                 &lt;dbl&gt;
+ 1  1800 AFG                      -6
+ 2  1800 ALB                      NA
+ 3  1800 ALG                      NA
+ 4  1800 ANG                      NA
+ 5  1800 ARG                      NA
+ 6  1800 ARM                      NA
+ 7  1800 AUL                      NA
+ 8  1800 AUS                     -10
+ 9  1800 AZE                      NA
+10  1800 BAD                      NA
+# ℹ 42,088 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>join_gen_pol</span> <span class='op'>&lt;-</span> <span class='va'>piv_gen_year</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>polity</span>, by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Country Code"</span>, <span class='st'>"year"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>join_gen_pol</span></span></code></pre>
+</div>
+<pre><code># A tibble: 2,133 × 6
+   `Country Name` `Country Code`  year Proportion of seats held by w…¹
+   &lt;chr&gt;          &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;                          
+ 1 Afghanistan    AFG             1990 ..                             
+ 2 Afghanistan    AFG             1991 ..                             
+ 3 Afghanistan    AFG             1992 ..                             
+ 4 Afghanistan    AFG             1993 ..                             
+ 5 Afghanistan    AFG             1994 ..                             
+ 6 Afghanistan    AFG             1995 ..                             
+ 7 Afghanistan    AFG             1996 ..                             
+ 8 Afghanistan    AFG             1997 ..                             
+ 9 Afghanistan    AFG             1998 ..                             
+10 Afghanistan    AFG             1999 ..                             
+# ℹ 2,123 more rows
+# ℹ abbreviated name:
+#   ¹​`Proportion of seats held by women in national parliaments (%)`
+# ℹ 2 more variables:
+#   `Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)` &lt;chr&gt;,
+#   polity_score &lt;dbl&gt;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>join_gen_pol</span> <span class='op'>&lt;-</span> <span class='va'>join_gen_pol</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>prop_female_seats <span class='op'>=</span> <span class='va'>`Proportion of seats held by women in national parliaments (%)`</span>,</span>
+<span>         labor_female <span class='op'>=</span> <span class='va'>`Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>join_gen_pol</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_female_seats</span>, y <span class='op'>=</span> <span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>join_gen_pol</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_female_seats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>prop_female_seats</span><span class='op'>)</span>,</span>
+<span>         labor_female <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>join_gen_pol</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_female_seats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>prop_female_seats</span><span class='op'>)</span>,</span>
+<span>         labor_female <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_female_seats</span>, y <span class='op'>=</span> <span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Proportion of women in national parliament"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Labor force participation of females"</span>,</span>
+<span>    title <span class='op'>=</span> <span class='st'>"Women in Politics and the Economy"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>join_gen_pol_int</span> <span class='op'>&lt;-</span> <span class='va'>join_gen_pol</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_female_seats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>prop_female_seats</span><span class='op'>)</span>,</span>
+<span>         labor_female <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>join_gen_pol_int</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>regime_type <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>polity_score</span> <span class='op'>&lt;</span> <span class='op'>-</span><span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Authoritarian"</span>,</span>
+<span>    <span class='va'>polity_score</span> <span class='op'>&gt;=</span> <span class='op'>-</span><span class='fl'>5</span> <span class='op'>&amp;</span> <span class='va'>polity_score</span> <span class='op'>&lt;</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Anocracy"</span>,</span>
+<span>    <span class='va'>polity_score</span> <span class='op'>&gt;</span> <span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Democracy"</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_female_seats</span>, y <span class='op'>=</span> <span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>regime_type</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

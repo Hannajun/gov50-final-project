@@ -136,6 +136,10 @@ piv_gen_year
 
 ```{r}
 polity <- polity |>
+  pivot_longer(cols = `AFG`:`ZIM`,
+    names_to = "Country Code",
+    values_to = "polity_score"
+  ) |>
   mutate(year = as.integer(year))
 polity
 ```
