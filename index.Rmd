@@ -200,6 +200,12 @@ join_gen_pol_int |>
   )) |>
   ggplot(aes(x = prop_female_seats, y = labor_female)) +
   geom_point() +
-  facet_wrap(~regime_type)
+  facet_wrap(~regime_type) +
+  labs(x = "Proportion of Women in National Parliament",
+       y = "Labor Force Participation of Females",
+       title = "Women in Politics and the Economy by Regime Type")
 ```
 
+Analysis
+
+The visualization above shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women's political participation will positively correlate with women's economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women's political participation may be a good indicator for women's economic participation and vice versa. 
