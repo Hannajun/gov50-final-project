@@ -33,14 +33,15 @@ wb_gender_tenyears <- wb_gender |>
 
 ```{r}
 wb_gender_2012 <- wb_gender_tenyears |>
-  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)") |>
+  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)" | `Series Name` == "Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)") |>
   pivot_wider(
     names_from = `Series Name`,
     values_from = `2012 [YR2012]`:`2022 [YR2022]`
   ) |>
-  select(`Country Name`, `Country Code`,`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`, `2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`) |>
+  select(`Country Name`, `Country Code`, `2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`, `2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`, `2012 [YR2012]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`) |>
   mutate(prop_seats_women = as.integer(`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`),
-         WBL_score = as.integer(`2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`))
+         WBL_score = as.integer(`2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`),
+         labor_female = as.integer(`2012 [YR2012]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`))
 wb_gender_2012
 ```
 
@@ -56,18 +57,21 @@ wb_gender_2012 |>
 ```{r}
 cor(wb_gender_2012$prop_seats_women, wb_gender_2012$WBL_score,
     use = "pairwise")
+
+cor(wb_gender_2012$prop_seats_women, wb_gender_2012$labor_female,
+    use = "pairwise")
 ```
 
 ```{r}
 wb_gender_2022 <- wb_gender_tenyears |>
-  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)") |>
+  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)" | `Series Name` == "Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)") |>
   pivot_wider(
     names_from = `Series Name`,
     values_from = `2012 [YR2012]`:`2022 [YR2022]`
   ) |>
-  select(`Country Name`, `Country Code`,`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`, `2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`) |>
+  select(`Country Name`, `Country Code`,`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`, `2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`, `2022 [YR2022]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`) |>
   mutate(prop_seats_women = as.integer(`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`),
-         WBL_score = as.integer(`2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`))
+         WBL_score = as.integer(`2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`), labor_female = as.integer(`2022 [YR2022]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`))
 wb_gender_2022
 ```
 
@@ -80,6 +84,8 @@ wb_gender_2022 |>
 ```
 ```{r}
 cor(wb_gender_2022$prop_seats_women, wb_gender_2022$WBL_score,
+    use = "pairwise")
+cor(wb_gender_2022$prop_seats_women, wb_gender_2022$labor_female,
     use = "pairwise")
 ```
 ```{r}
@@ -124,13 +130,14 @@ piv_gen_year <- wb_gender |>
     names_from = `Series Name`,
     values_from = indicator
   )
-piv_gen_year        
+piv_gen_year     
 ```
 
 
 ```{r}
 piv_gen_year <- piv_gen_year |>
-  mutate(year = as.integer(year))
+  mutate(year = as.integer(year),
+         prop_seats = as.integer(`Proportion of seats held by women in national parliaments (%)`))
 piv_gen_year
 ```
 
@@ -205,6 +212,25 @@ join_gen_pol_int |>
        y = "Labor Force Participation of Females",
        title = "Women in Politics and the Economy by Regime Type")
 ```
+
+
+```{r}
+corr <- cor(join_gen_pol_int$prop_female_seats, join_gen_pol_int$labor_female,
+    use = "pairwise")
+corr
+```
+
+```{r}
+fit <- lm(labor_female ~ prop_female_seats, data = join_gen_pol_int)
+summary(fit)
+
+fit2 <- lm(prop_female_seats ~ labor_female, data = join_gen_pol_int)
+summary(fit2)
+
+fit3 <- lm(labor_female ~ prop_female_seats + polity_score, data = join_gen_pol_int)
+summary(fit3)
+```
+
 
 Analysis
 
