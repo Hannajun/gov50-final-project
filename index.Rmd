@@ -1,22 +1,25 @@
 ---
 title: "Gov 50 Final Project"
 author: "Han Na Jun"
-description: "Authoritarian regimes and gender policies"
+description: "Women's Political and Economic Participation in Democracies and Autocracies"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
 
+## Introduction
 
-## Project thoughts
-
-I am interested in exploring data related to the number of times "women" or "gender" is mentioned in new policies under authoritarian regimes. Through this, I aim to discover which authoritarian regimes tend to appeal to gender policies than others, as well as in correlation to which type of policies (political, economic, or social rights of women).
-
-##Research Proposal
+- an introduction where you introduce the research question and hypothesis and briefly describe why it is interesting (1-2 paragraphs) (2pts)
 
 Do gender quotas under authoritarian regimes positively affect women's economic participation? This study draws upon existing literature that investigates authoritarian regime's incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. Accordingly, I seek to investigate the efficacy of gender quotas under such regimes and discover if the policies go beyond mere signaling. I hypothesize that that gender quotas will not have significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. My sample, drawn from the World Development Indicators by the World Bank, is comprised of all countries from 1960 to 2022. My unit of analysis is by country and year. My explanatory variable of interest is the 'Proportion of seats held by women in national parliaments (%),' which I will compare with the country's gender quota policy, if applicable. My outcome variable of interest is the change in women's economic status, measured by the 'Women Business and the Law Index Score.' I will then compare these results by their relative polity score. If I observe little change in the economic status of women despite increase in the number of women in parliament, this would provide support for my hypothesis. If I observe an increase in the economic status of women along with the increase of women in parliament, the evidence would counter my hypothesis. 
 
+
+## Data Selection
+
+- briefly describes the data source, describes how the key dependent and independent variables are measured (e.g., a survey, statistical model, or expert coding), and also produces a plot that summarizes the dependent variable
+- For the data section, you should note if your research design is cross-sectional (most projects will be of this type) or one of the other designs we discussed (randomized experiment, before-and-after, differences-in-differences).
+2-3 paragraphs (3pts)
 
 ```{r}
 library(tidyverse)
@@ -178,6 +181,12 @@ join_gen_pol |>
   geom_histogram()
 ```
 
+
+## Results
+- results section that contains a scatterplot, barplot, or boxplot of the main relationship of interest and output for the main regression of interest
+- For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
+2-3 paragraphs (8pts)
+
 ```{r}
 join_gen_pol |>
   mutate(prop_female_seats = as.integer(prop_female_seats),
@@ -234,4 +243,9 @@ summary(fit3)
 
 Analysis
 
-The visualization above shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women's political participation will positively correlate with women's economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women's political participation may be a good indicator for women's economic participation and vice versa. 
+The visualization above shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women's political participation will positively correlate with women's economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women's political participation may be a good indicator for women's economic participation and vice versa.
+
+## Conclusion
+
+- a brief (one paragraph) concluding section that summarizes your results, assesses the extent to which you find support for your hypothesis, describes limitations of your analysis and threats to inference, and states how your analysis could be improved (e.g., improved data that would be useful to collect).
+- 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)
