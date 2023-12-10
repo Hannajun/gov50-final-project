@@ -12,7 +12,7 @@ output:
 
 - an introduction where you introduce the research question and hypothesis and briefly describe why it is interesting (1-2 paragraphs) (2pts)
 
-Do gender quotas under authoritarian regimes positively affect women's economic participation? This study draws upon existing literature that investigates authoritarian regime's incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. Accordingly, I seek to investigate the efficacy of gender quotas under such regimes and discover if the policies go beyond mere signaling. I hypothesize that that gender quotas will not have significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. My sample, drawn from the World Development Indicators by the World Bank, is comprised of all countries from 1960 to 2022. My unit of analysis is by country and year. My explanatory variable of interest is the 'Proportion of seats held by women in national parliaments (%),' which I will compare with the country's gender quota policy, if applicable. My outcome variable of interest is the change in women's economic status, measured by the 'Women Business and the Law Index Score.' I will then compare these results by their relative polity score. If I observe little change in the economic status of women despite increase in the number of women in parliament, this would provide support for my hypothesis. If I observe an increase in the economic status of women along with the increase of women in parliament, the evidence would counter my hypothesis. 
+Do gender quotas under authoritarian regimes positively affect women's economic participation? This study draws upon existing literature that investigates authoritarian regime's incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. Accordingly, I seek to investigate the efficacy of gender quotas under such regimes and discover if the policies go beyond mere signaling. I hypothesize that that gender quotas will not have significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. This research contributes to the understanding of the substantial effects of gender quotas in autocratic states, which is especially pertinent to the appeal for the implementation of gender quotas at the international level.
 
 
 ## Data Selection
@@ -20,6 +20,14 @@ Do gender quotas under authoritarian regimes positively affect women's economic 
 - briefly describes the data source, describes how the key dependent and independent variables are measured (e.g., a survey, statistical model, or expert coding), and also produces a plot that summarizes the dependent variable
 - For the data section, you should note if your research design is cross-sectional (most projects will be of this type) or one of the other designs we discussed (randomized experiment, before-and-after, differences-in-differences).
 2-3 paragraphs (3pts)
+
+My sample, drawn from the World Development Indicators produced by the World Bank, is comprised of ## countries. My scope of analysis is from 1990 to 2016, considering the rapid increase in gender quotas since the 1990s and the availability of data. My unit of analysis is by country and year. My explanatory variable of interest is the 'Proportion of seats held by women in national parliaments (%),' which reflects gender quotas implemented by countries, if applicable. My outcome variable of interest is the change in women's economic status, measured by the 'Women Business and the Law Index Score.' I will then compare these results by their relative polity score. If I observe little change in the economic status of women despite increase in the number of women in parliament, this would provide support for my hypothesis. If I observe an increase in the economic status of women along with the increase of women in parliament, the evidence would counter my hypothesis.
+
+My research is a cross-sectional design that compares the ~
+
+plot
+
+plot description
 
 ```{r}
 library(tidyverse)
@@ -183,6 +191,7 @@ join_gen_pol |>
 
 
 ## Results
+
 - results section that contains a scatterplot, barplot, or boxplot of the main relationship of interest and output for the main regression of interest
 - For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
 2-3 paragraphs (8pts)
@@ -249,3 +258,5 @@ The visualization above shows the correlation between the proportion of seats he
 
 - a brief (one paragraph) concluding section that summarizes your results, assesses the extent to which you find support for your hypothesis, describes limitations of your analysis and threats to inference, and states how your analysis could be improved (e.g., improved data that would be useful to collect).
 - 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)
+
+
