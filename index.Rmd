@@ -10,7 +10,9 @@ output:
 
 ## Introduction
 
-Do women's political participation in parliament positively affect women's economic participation? How do the correlation between these two factors vary across regime types, specifically democratic and authoritarian states? This study draws upon existing literature that investigates authoritarian regimes' incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. Accordingly, I seek to investigate the efficacy of women's heightened political participation under such regimes and discover if the policies go beyond mere signaling. I hypothesize that women's political participation in parliament will not have a significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. This research contributes to the understanding of the substantial effects of women's inclusion in political institutions such as parliament in autocratic states, which is especially pertinent to the appeal for the implementation of gender quotas at the international level.
+Do women's political participation in parliament positively affect women's economic participation? How do the correlation between these two factors vary across regime types, specifically democratic and authoritarian states? This study draws upon existing literature that investigates authoritarian regimes' incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. 
+
+Accordingly, I seek to investigate the efficacy of women's heightened political participation under such regimes and discover if the policies go beyond mere signaling. I hypothesize that women's political participation in parliament will not have a significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. This research contributes to the understanding of the substantial effects of women's inclusion in political institutions such as parliament in autocratic states, which is especially pertinent to the appeal for the implementation of gender quotas at the international level.
 
 
 ## Data Selection
@@ -19,7 +21,6 @@ My data draws upon the World Development Indicators Database produced by the Wor
 
 My research is a cross-sectional design that compares the outcome of the treatment, or political participation of women. If I observe little change in the labor force participation of women despite increase in the number of women in parliament under authoritarian regimes, this would provide support for my hypothesis. If I observe an increase in labor force participation of women along with the increase of women in parliament, the evidence would counter my hypothesis.
 
-Figure 1 is a histogram that summarizes the labor force participation of females across all 217 countries from years 1990 to 2016. The histogram is skewed to the left, indicating that a significant portion of the data lies within 50% to 75% labor force participation rate of females.
 
 ```{r}
 ## Preparing the data
@@ -78,13 +79,13 @@ plot1 <- wdi |>
 plot1
 ```
 
+Figure 1 is a histogram that summarizes the labor force participation of females across all 217 countries from years 1990 to 2016. The histogram is skewed to the left, indicating that a significant portion of the data lies within 50% to 75% labor force participation rate of females.
+
 
 ## Results
 
 - For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
 2-3 paragraphs (8pts)
-
-Figure 3 shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women's political participation will positively correlate with women's economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women's political participation may be a good indicator for women's economic participation and vice versa.
 
 
 ```{r}
@@ -125,6 +126,8 @@ plot3 <- join_wdi_pol |>
        title = "Figure 3. Women in Politics and the Economy by Regime Type")
 plot3
 ```
+
+Figure 3 shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women's political participation will positively correlate with women's economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women's political participation may be a good indicator for women's economic participation and vice versa.
 
 
 ```{r}
