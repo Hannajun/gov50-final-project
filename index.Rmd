@@ -21,8 +21,6 @@ My data draws upon the World Development Indicators Database produced by the Wor
 
 My research is a cross-sectional design that compares the outcome of the treatment, or political participation of women. If I observe little change in the labor force participation of women despite increase in the number of women in parliament under authoritarian regimes, this would provide support for my hypothesis. If I observe an increase in labor force participation of women along with the increase of women in parliament, the evidence would counter my hypothesis.
 
-Figure 1 is a histogram that summarizes the labor force participation of females across all 217 countries from years 1990 to 2016. The histogram is skewed to the left, indicating that a significant portion of the data lies within 50% to 75% labor force participation rate of females.
-
 
 ```{r}
 ## Preparing the data
@@ -70,6 +68,9 @@ join_wdi_pol
 ```
 
 
+Figure 1 is a histogram that summarizes the labor force participation of females across all 217 countries from years 1990 to 2016. The histogram is skewed to the left, indicating that a significant portion of the data lies within 50% to 75% labor force participation rate of females.
+
+
 ```{r}
 ## Plotting explanatory variable
 
@@ -90,12 +91,6 @@ plot1
 
 To evaluate the relationship between women's political and economic participation, I use both correlation and a regression model. I first plot and calculate the correlation between 'Proportion of seats held by women in national parliaments' as my independent variable and 'Female labor force participation rate' as my dependent variable. Figure 2 displays a scatterplot of the two variables in which the direction of relationship is positive, suggesting that as the proportion of seats held by women in national parliaments increases, the female labor force participation rate also increases. However, the points on the plot are dispersed rather than concentrated, suggesting a weak relationship between the two variables. Most of the points are clustered in the 0-20% and 20-40% range of the proportion of seats held by women in national parliaments, whereas the rate of female participation in the labor force seems to be scattered mostly in the 25-75% range. One outlier sits at over 60% of the proportion of women in seats of parliament. A line of best fit is added to summarize this general trend in the data, which also indicates a meager positive relationship between the two variables.
 
-Additionally, I calculate the correlation coefficient between my independent and dependent variables as shown in Table 1. The correlation coefficient is around 0.3, which complements my analysis that there is a weak positive relationship between the proportion of seats taken by women in national parliaments and the labor force participation rate of females.
-
-Furthermore, I plot the relationship between my two variables by regime type. I divide the data into three regime types upon their polity score. A polity score under -5 constitutes "authoritarian," a polity score of -5 to 5 constitutes an "anocracy," and a polity score above 5 constitutes a "democracy." Figure 3 shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type. The plot for anocracies shows points scattered across the 0-30% range for women's participation in parliament and a wide range for female labor participation, with the exception of a few outliers that lie at a higher range for the former. The plot indicates weak positive correlation between my two variables for anocracies. The plot for authoritarian regimes also shows that the points are widely dispersed, though none of the points lie above the 50% range for the proportion of seats held by women in parliament. However, there seems to be a stronger positive relationship between my two variables as compared to other regime types. Lastly, the plot for democracies shows the most randomness, as the points are scattered throughout all ranges of the proportion of seats taken by women in parliament and female labor force participation.
-
-I also calculate the correlation coefficient for each regime type, as displayed in Table 2. The correlation between the proportion of seats held by women in national parliaments and female labor force participation rate is highest for authoritarian regimes at 0.47 and lowest for democracies at 0.18. The correlation coefficient is 0.21 for anocracies. Across all regime types, there seems to be a general positive relationship between my two variables. However, the findings counter my hypothesis that the relationship between women's political and economic participation will be weakest under authoritarian regimes. Contrary to my original hypothesis, the correlation between my two variables seems weakest in democracies.
-
 
 ```{r}
 ## Plotting dependent and independent variables
@@ -111,6 +106,10 @@ plot2 <- join_wdi_pol |>
 plot2
 ```
 
+
+Additionally, I calculate the correlation coefficient between my independent and dependent variables as shown in Table 1. The correlation coefficient is around 0.3, which complements my analysis that there is a weak positive relationship between the proportion of seats taken by women in national parliaments and the labor force participation rate of females.
+
+
 ```{r}
 ## Finding correlation
 
@@ -118,6 +117,11 @@ corr <- cor(join_wdi_pol$prop_seats_women, join_wdi_pol$labor_female,
     use = "pairwise")
 knitr::kable(corr, caption = "Correlation between proportion of seats taken by women in parliaments and female labor force participation", col.names = c("Correlation Coefficient"), digits = 2)
 ```
+
+
+
+Furthermore, I plot the relationship between my two variables by regime type. I divide the data into three regime types upon their polity score. A polity score under -5 constitutes "authoritarian," a polity score of -5 to 5 constitutes an "anocracy," and a polity score above 5 constitutes a "democracy." Figure 3 shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type. The plot for anocracies shows points scattered across the 0-30% range for women's participation in parliament and a wide range for female labor participation, with the exception of a few outliers that lie at a higher range for the former. The plot indicates weak positive correlation between my two variables for anocracies. The plot for authoritarian regimes also shows that the points are widely dispersed, though none of the points lie above the 50% range for the proportion of seats held by women in parliament. However, there seems to be a stronger positive relationship between my two variables as compared to other regime types. Lastly, the plot for democracies shows the most randomness, as the points are scattered throughout all ranges of the proportion of seats taken by women in parliament and female labor force participation.
+
 
 ```{r}
 ## Plotting relationship by regime type
@@ -136,7 +140,13 @@ plot3 <- join_wdi_pol |>
        y = "Labor Force Participation of Females",
        title = "Figure 3. Women in Politics and the Economy by Regime Type")
 plot3
+```
 
+
+I also calculate the correlation coefficient for each regime type, as displayed in Table 2. The correlation between the proportion of seats held by women in national parliaments and female labor force participation rate is highest for authoritarian regimes at 0.47 and lowest for democracies at 0.18. The correlation coefficient is 0.21 for anocracies. Across all regime types, there seems to be a general positive relationship between my two variables. However, the findings counter my hypothesis that the relationship between women's political and economic participation will be weakest under authoritarian regimes. Contrary to my original hypothesis, the correlation between my two variables seems weakest in democracies.
+
+
+```{r}
 corr_regime <- join_wdi_pol |>
   drop_na() |>
   mutate(regime_type = case_when(
@@ -214,7 +224,7 @@ modelsummary::modelsummary(fit4,
                            gof_map = c("nobs", "r.squared", "adj.r.squared"),
                            coef_map = var_label)
 ```
-regression explanation
+
 
 ## Conclusion
 
