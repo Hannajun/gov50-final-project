@@ -144,6 +144,19 @@ summary(fit3)
 
 fit4 <- lm(labor_female ~ GDPpc, data = join_wdi_pol)
 summary(fit4)
+
+var_label <- c(
+  "(Intercept)" = "Intercept",
+  "prop_seats_women" = "Proportion of female seats in parliament",
+  "polity_score" = "Polity score",
+  "GDPpc" = "GDP per capita"
+)
+
+modelsummary::modelsummary(fit3,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"),
+                           coef_map = var_label)
 ```
 regression explanation
 
