@@ -1,7 +1,7 @@
 ---
-title: "Gov 50 Final Project"
+title: "Women's Political and Economic Participation in Democracies and Autocracies"
 author: "Han Na Jun"
-description: "Women's Political and Economic Participation in Democracies and Autocracies"
+description: "GOV50 Final Project"
 output:
   distill::distill_article:
     self_contained: false
@@ -10,249 +10,139 @@ output:
 
 ## Introduction
 
-- an introduction where you introduce the research question and hypothesis and briefly describe why it is interesting (1-2 paragraphs) (2pts)
-
-Do gender quotas under authoritarian regimes positively affect women's economic participation? This study draws upon existing literature that investigates authoritarian regime's incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. Accordingly, I seek to investigate the efficacy of gender quotas under such regimes and discover if the policies go beyond mere signaling. I hypothesize that that gender quotas will not have significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. This research contributes to the understanding of the substantial effects of gender quotas in autocratic states, which is especially pertinent to the appeal for the implementation of gender quotas at the international level.
+Do women's political participation in parliament positively affect women's economic participation? How do the correlation between these two factors vary across regime types, specifically democratic and authoritarian states? This study draws upon existing literature that investigates authoritarian regimes' incentives for implementing gender quotas, sometimes at higher levels than democratic states. While scholars have argued that authoritarian states do so to gain legitimacy at the domestic and international level, there is relatively little research as to whether such policies addressing women's political representation affect women's empowerment, specifically economic status. Accordingly, I seek to investigate the efficacy of women's heightened political participation under such regimes and discover if the policies go beyond mere signaling. I hypothesize that women's political participation in parliament will not have a significant effect on the economic status of women in authoritarian regimes. I also hypothesize that this tendency will be higher for more repressive regimes. This research contributes to the understanding of the substantial effects of women's inclusion in political institutions such as parliament in autocratic states, which is especially pertinent to the appeal for the implementation of gender quotas at the international level.
 
 
 ## Data Selection
 
-- briefly describes the data source, describes how the key dependent and independent variables are measured (e.g., a survey, statistical model, or expert coding), and also produces a plot that summarizes the dependent variable
-- For the data section, you should note if your research design is cross-sectional (most projects will be of this type) or one of the other designs we discussed (randomized experiment, before-and-after, differences-in-differences).
-2-3 paragraphs (3pts)
+My data draws upon the World Development Indicators Database produced by the World Bank and polity score data produced by the Center for Systemic Peace. The unit of analysis is by country and year, and the scope of my analysis is across 217 countries and from years 1990 to 2016, considering the rapid increase in gender quotas since the 1990s and the availability of data. My explanatory variable of interest is the 'Proportion of seats held by women in national parliaments (%),' which is a country-level measurement of women's political participation. My outcome variable of interest is the 'Labor force participation rate, female (% of female population ages 15-64),' which is a statistical model estimate by the International Labor Organization. Furthermore, I will compare these results by their relative polity score, which is a country-level coding of authority characteristics of states.
 
-My sample, drawn from the World Development Indicators produced by the World Bank, is comprised of ## countries. My scope of analysis is from 1990 to 2016, considering the rapid increase in gender quotas since the 1990s and the availability of data. My unit of analysis is by country and year. My explanatory variable of interest is the 'Proportion of seats held by women in national parliaments (%),' which reflects gender quotas implemented by countries, if applicable. My outcome variable of interest is the change in women's economic status, measured by the 'Women Business and the Law Index Score.' I will then compare these results by their relative polity score. If I observe little change in the economic status of women despite increase in the number of women in parliament, this would provide support for my hypothesis. If I observe an increase in the economic status of women along with the increase of women in parliament, the evidence would counter my hypothesis.
+My research is a cross-sectional design that compares the outcome of the treatment, or political participation of women. If I observe little change in the labor force participation of women despite increase in the number of women in parliament under authoritarian regimes, this would provide support for my hypothesis. If I observe an increase in labor force participation of women along with the increase of women in parliament, the evidence would counter my hypothesis.
 
-My research is a cross-sectional design that compares the ~
-
-plot
-
-plot description
+Figure 1 is a histogram that summarizes the labor force participation of females across all 217 countries from years 1990 to 2016. The histogram is skewed to the left, indicating that a significant portion of the data lies within 50% to 75% labor force participation rate of females.
 
 ```{r}
+## Preparing the data
+
 library(tidyverse)
-wb_gender <- read_csv("data/wb_gender.csv.csv")
+wb_gender <- read_csv("data/wb_gender.csv")
 polity <- read_csv("data/polity.csv")
-```
 
+wb_gender <- wb_gender |>
+  select(`Country Name`, `Country Code`, `Series Name`, `1990 [YR1990]`:`2016 [YR2016]`)
 
-```{r}
-wb_gender_tenyears <- wb_gender |>
-  drop_na() |>
-  select(`Country Name`, `Country Code`, `Series Name`, `2012 [YR2012]`:`2022 [YR2022]`)
-```
+colnames(wb_gender) <-c("country","ccode","series",1990:2016)
 
-```{r}
-wb_gender_2012 <- wb_gender_tenyears |>
-  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)" | `Series Name` == "Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)") |>
+wdi <- wb_gender |>
+  gather(key = year, value=value, `1990`:`2016`, factor_key = F) |>
+  filter(series == "Proportion of seats held by women in national parliaments (%)" | series == "Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)" | series =="GDP per capita (constant 2015 US$)") |>
   pivot_wider(
-    names_from = `Series Name`,
-    values_from = `2012 [YR2012]`:`2022 [YR2022]`
-  ) |>
-  select(`Country Name`, `Country Code`, `2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`, `2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`, `2012 [YR2012]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`) |>
-  mutate(prop_seats_women = as.integer(`2012 [YR2012]_Proportion of seats held by women in national parliaments (%)`),
-         WBL_score = as.integer(`2012 [YR2012]_Women Business and the Law Index Score (scale 1-100)`),
-         labor_female = as.integer(`2012 [YR2012]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`))
-wb_gender_2012
-```
-
-```{r}
-wb_gender_2012 |>
-  ggplot(aes(x = prop_seats_women,
-             y = WBL_score)) +
-  geom_point() +
-  geom_smooth()
-```
-
-
-```{r}
-cor(wb_gender_2012$prop_seats_women, wb_gender_2012$WBL_score,
-    use = "pairwise")
-
-cor(wb_gender_2012$prop_seats_women, wb_gender_2012$labor_female,
-    use = "pairwise")
-```
-
-```{r}
-wb_gender_2022 <- wb_gender_tenyears |>
-  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" | `Series Name` == "Women Business and the Law Index Score (scale 1-100)" | `Series Name` == "Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)") |>
-  pivot_wider(
-    names_from = `Series Name`,
-    values_from = `2012 [YR2012]`:`2022 [YR2022]`
-  ) |>
-  select(`Country Name`, `Country Code`,`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`, `2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`, `2022 [YR2022]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`) |>
-  mutate(prop_seats_women = as.integer(`2022 [YR2022]_Proportion of seats held by women in national parliaments (%)`),
-         WBL_score = as.integer(`2022 [YR2022]_Women Business and the Law Index Score (scale 1-100)`), labor_female = as.integer(`2022 [YR2022]_Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`))
-wb_gender_2022
-```
-
-```{r}
-wb_gender_2022 |>
-  ggplot(aes(x = prop_seats_women,
-             y = WBL_score)) +
-  geom_point() +
-  geom_smooth()
-```
-```{r}
-cor(wb_gender_2022$prop_seats_women, wb_gender_2022$WBL_score,
-    use = "pairwise")
-cor(wb_gender_2022$prop_seats_women, wb_gender_2022$labor_female,
-    use = "pairwise")
-```
-```{r}
-piv_gen_year <- wb_gender |>
-  select(`Country Name`, `Country Code`, `Series Name`, `1990 [YR1990]`:`2016 [YR2016]`) |>
-  rename("1990" = `1990 [YR1990]`,
-         "1991" = `1991 [YR1991]`,
-         "1992" = `1992 [YR1992]`,
-         "1993" = `1993 [YR1993]`,
-         "1994" = `1994 [YR1994]`,
-         "1995" = `1995 [YR1995]`,
-         "1996" = `1996 [YR1996]`,
-         "1997" = `1997 [YR1997]`,
-         "1998" = `1998 [YR1998]`,
-         "1999" = `1999 [YR1999]`,
-         "2000" = `2000 [YR2000]`,
-         "2001" = `2001 [YR2001]`,
-         "2002" = `2002 [YR2002]`,
-         "2003" = `2003 [YR2003]`,
-         "2004" = `2004 [YR2004]`,
-         "2005" = `2005 [YR2005]`,
-         "2006" = `2006 [YR2006]`,
-         "2007" = `2007 [YR2007]`,
-         "2008" = `2008 [YR2008]`,
-         "2009" = `2009 [YR2009]`,
-         "2010" = `2010 [YR2010]`,
-         "2011" = `2011 [YR2011]`,
-         "2012" = `2012 [YR2012]`,
-         "2013" = `2013 [YR2013]`,
-         "2014" = `2014 [YR2014]`,
-         "2015" = `2015 [YR2015]`,
-         "2016" = `2016 [YR2016]`) |>
-  filter(`Series Name` == "Proportion of seats held by women in national parliaments (%)" |
-           `Series Name` == "Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"
-  ) |>
-  pivot_longer(
-    cols= `1990` : `2016`,
-    names_to = "year",
-    values_to = "indicator"
-  ) |>
-  pivot_wider(
-    names_from = `Series Name`,
-    values_from = indicator
+    names_from = "series",
+    values_from = "value"
   )
-piv_gen_year     
-```
+
+colnames(wdi) <- c("country", "ccode", "year", "prop_seats_women", "GDPpc", "labor_female")
 
 
-```{r}
-piv_gen_year <- piv_gen_year |>
-  mutate(year = as.integer(year),
-         prop_seats = as.integer(`Proportion of seats held by women in national parliaments (%)`))
-piv_gen_year
+wdi$year <- as.numeric(wdi$year)
+
+head(wdi)
 ```
 
 ```{r}
+##Joining WDI and Polity data
+
 polity <- polity |>
   pivot_longer(cols = `AFG`:`ZIM`,
-    names_to = "Country Code",
+    names_to = "ccode",
     values_to = "polity_score"
   ) |>
-  mutate(year = as.integer(year))
+  mutate(year = as.numeric(year))
 polity
+
+join_wdi_pol <- wdi |>
+  left_join(polity, by = c("ccode", "year"))
+join_wdi_pol
+
 ```
 
 
 ```{r}
-join_gen_pol <- piv_gen_year |>
-  inner_join(polity, by = c("Country Code", "year"))
-join_gen_pol
-```
+## Plotting explanatory variable
 
-```{r}
-join_gen_pol <- join_gen_pol |>
-  rename(prop_female_seats = `Proportion of seats held by women in national parliaments (%)`,
-         labor_female = `Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`)
-```
-
-```{r}
-join_gen_pol |>
-  ggplot(aes(x = prop_female_seats, y = labor_female)) +
-  geom_point()
-```
-
-```{r}
-join_gen_pol |>
-  mutate(prop_female_seats = as.integer(prop_female_seats),
-         labor_female = as.integer(labor_female)) |>
+plot1 <- wdi |>
   ggplot(aes(x = labor_female)) +
-  geom_histogram()
+  geom_histogram() +
+  labs(title = "Figure 1. Labor Force Participation of Females, 1990 - 2016",
+       x = "Female labor force participation rate")
+plot1
 ```
 
 
 ## Results
 
-- results section that contains a scatterplot, barplot, or boxplot of the main relationship of interest and output for the main regression of interest
 - For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
 2-3 paragraphs (8pts)
 
+Figure 3 shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women's political participation will positively correlate with women's economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women's political participation may be a good indicator for women's economic participation and vice versa.
+
+
 ```{r}
-join_gen_pol |>
-  mutate(prop_female_seats = as.integer(prop_female_seats),
-         labor_female = as.integer(labor_female)) |>
-  ggplot(aes(x = prop_female_seats, y = labor_female)) +
+## Plotting dependent and independent variables
+
+plot2 <- join_wdi_pol |>
+  ggplot(aes(x = prop_seats_women,
+             y = labor_female)) +
   geom_point() +
   geom_smooth() +
-  labs(
-    x = "Proportion of women in national parliament",
-    y = "Labor force participation of females",
-    title = "Women in Politics and the Economy"
-  )
+  labs(title = "Figure 2. Political and Economic Participation of Females, 1990 - 2016",
+       x = "Proportion of seats held by women in national parliaments (%)",
+       y = "Female labor force participation rate")
+plot2
 ```
 
 ```{r}
-join_gen_pol_int <- join_gen_pol |>
-  mutate(prop_female_seats = as.integer(prop_female_seats),
-         labor_female = as.integer(labor_female))
-```
+## Finding correlation
 
-```{r}
-join_gen_pol_int |>
-  mutate(regime_type = case_when(
-    polity_score < -5 ~ "Authoritarian",
-    polity_score >= -5 & polity_score < 6 ~ "Anocracy",
-    polity_score > 5 ~ "Democracy"
-  )) |>
-  ggplot(aes(x = prop_female_seats, y = labor_female)) +
-  geom_point() +
-  facet_wrap(~regime_type) +
-  labs(x = "Proportion of Women in National Parliament",
-       y = "Labor Force Participation of Females",
-       title = "Women in Politics and the Economy by Regime Type")
-```
-
-
-```{r}
-corr <- cor(join_gen_pol_int$prop_female_seats, join_gen_pol_int$labor_female,
+corr <- cor(join_wdi_pol$prop_seats_women, join_wdi_pol$labor_female,
     use = "pairwise")
 corr
 ```
 
 ```{r}
-fit <- lm(labor_female ~ prop_female_seats, data = join_gen_pol_int)
-summary(fit)
-
-fit2 <- lm(prop_female_seats ~ labor_female, data = join_gen_pol_int)
-summary(fit2)
-
-fit3 <- lm(labor_female ~ prop_female_seats + polity_score, data = join_gen_pol_int)
-summary(fit3)
+## Plotting relationship by regime type
+plot3 <- join_wdi_pol |>
+  mutate(regime_type = case_when(
+    polity_score < -5 ~ "Authoritarian",
+    polity_score >= -5 & polity_score < 6 ~ "Anocracy",
+    polity_score > 5 ~ "Democracy"
+  )) |>
+  ggplot(aes(x = prop_seats_women, y = labor_female)) +
+  geom_point() +
+  facet_wrap(~regime_type) +
+  labs(x = "Proportion of Women in National Parliament",
+       y = "Labor Force Participation of Females",
+       title = "Figure 3. Women in Politics and the Economy by Regime Type")
+plot3
 ```
 
 
-Analysis
+```{r}
+## Running regressions
 
-The visualization above shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women's political participation will positively correlate with women's economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women's political participation may be a good indicator for women's economic participation and vice versa.
+fit1 <- lm(labor_female ~ prop_seats_women, data = join_wdi_pol)
+summary(fit1)
+
+fit2 <- lm(labor_female ~ prop_seats_women + polity_score, data = join_wdi_pol)
+summary(fit2)
+
+fit3 <- lm(labor_female ~ prop_seats_women + polity_score + GDPpc, data = join_wdi_pol)
+summary(fit3)
+
+fit4 <- lm(labor_female ~ GDPpc, data = join_wdi_pol)
+summary(fit4)
+```
+regression explanation
 
 ## Conclusion
 
