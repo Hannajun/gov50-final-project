@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/535e491d-44c2-4e4b-b500-423a15784a21_Series - Metadata.csv","data/polity.csv","data/wb_gender.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-14-1.png","index_files/figure-html5/unnamed-chunk-15-1.png","index_files/figure-html5/unnamed-chunk-16-1.png","index_files/figure-html5/unnamed-chunk-18-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/535e491d-44c2-4e4b-b500-423a15784a21_Series - Metadata.csv","data/polity.csv","data/wb_gender.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-14-1.png","index_files/figure-html5/unnamed-chunk-15-1.png","index_files/figure-html5/unnamed-chunk-16-1.png","index_files/figure-html5/unnamed-chunk-18-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/kePrint-0.0.1/kePrint.js","index_files/lightable-0.0.1/lightable.css","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1525,6 +1525,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="data-selection">Data Selection</h2>
 <p>My data draws upon the World Development Indicators Database produced by the World Bank and polity score data produced by the Center for Systemic Peace. The unit of analysis is by country and year, and the scope of my analysis is across 217 countries and from years 1990 to 2016, considering the rapid increase in gender quotas since the 1990s and the availability of data. My explanatory variable of interest is the ‘Proportion of seats held by women in national parliaments (%),’ which is a country-level measurement of women’s political participation. My outcome variable of interest is the ‘Labor force participation rate, female (% of female population ages 15-64),’ which is a statistical model estimate by the International Labor Organization. Furthermore, I will compare these results by their relative polity score, which is a country-level coding of authority characteristics of states.</p>
 <p>My research is a cross-sectional design that compares the outcome of the treatment, or political participation of women. If I observe little change in the labor force participation of women despite increase in the number of women in parliament under authoritarian regimes, this would provide support for my hypothesis. If I observe an increase in labor force participation of women along with the increase of women in parliament, the evidence would counter my hypothesis.</p>
+<p>Figure 1 is a histogram that summarizes the labor force participation of females across all 217 countries from years 1990 to 2016. The histogram is skewed to the left, indicating that a significant portion of the data lies within 50% to 75% labor force participation rate of females.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Preparing the data</span></span>
@@ -1623,12 +1624,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-<p>Figure 1 is a histogram that summarizes the labor force participation of females across all 217 countries from years 1990 to 2016. The histogram is skewed to the left, indicating that a significant portion of the data lies within 50% to 75% labor force participation rate of females.</p>
 <h2 id="results">Results</h2>
 <ul>
 <li>For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
 2-3 paragraphs (8pts)</li>
 </ul>
+<p>To evaluate the relationship between women’s political and economic participation, I use both correlation and a regression model. I first plot and calculate the correlation between ‘Proportion of seats held by women in national parliaments’ as my independent variable and ‘Female labor force participation rate’ as my dependent variable. Figure 2 displays a scatterplot of the two variables in which the direction of relationship is positive, suggesting that as the proportion of seats held by women in national parliaments increases, the female labor force participation rate also increases. However, the points on the plot are dispersed rather than concentrated, suggesting a weak relationship between the two variables. Most of the points are clustered in the 0-20% and 20-40% range of the proportion of seats held by women in national parliaments, whereas the rate of female participation in the labor force seems to be scattered mostly in the 25-75% range. One outlier sits at over 60% of the proportion of women in seats of parliament. A line of best fit is added to summarize this general trend in the data, which also indicates a meager positive relationship between the two variables.</p>
+<p>Additionally, I calculate the correlation coefficient between my independent and dependent variables as shown in Table 1. The correlation coefficient is around 0.3, which complements my analysis that there is a weak positive relationship between the proportion of seats taken by women in national parliaments and the labor force participation rate of females.</p>
+<p>Furthermore, I plot the relationship between my two variables by regime type. I divide the data into three regime types upon their polity score. A polity score under -5 constitutes “authoritarian,” a polity score of -5 to 5 constitutes an “anocracy,” and a polity score above 5 constitutes a “democracy.” Figure 3 shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type. The plot for anocracies shows points scattered across the 0-30% range for women’s participation in parliament and a wide range for female labor participation, with the exception of a few outliers that lie at a higher range for the former. The plot indicates weak positive correlation between my two variables for anocracies. The plot for authoritarian regimes also shows that the points are widely dispersed, though none of the points lie above the 50% range for the proportion of seats held by women in parliament. However, there seems to be a stronger positive relationship between my two variables as compared to other regime types. Lastly, the plot for democracies shows the most randomness, as the points are scattered throughout all ranges of the proportion of seats taken by women in parliament and female labor force participation.</p>
+<p>I also calculate the correlation coefficient for each regime type, as displayed in Table 2. The correlation between the proportion of seats held by women in national parliaments and female labor force participation rate is highest for authoritarian regimes at 0.47 and lowest for democracies at 0.18. The correlation coefficient is 0.21 for anocracies. Across all regime types, there seems to be a general positive relationship between my two variables. However, the findings counter my hypothesis that the relationship between women’s political and economic participation will be weakest under authoritarian regimes. Contrary to my original hypothesis, the correlation between my two variables seems weakest in democracies.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Plotting dependent and independent variables</span></span>
@@ -1651,14 +1655,27 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span></span>
 <span><span class='va'>corr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>join_wdi_pol</span><span class='op'>$</span><span class='va'>prop_seats_women</span>, <span class='va'>join_wdi_pol</span><span class='op'>$</span><span class='va'>labor_female</span>,</span>
 <span>    use <span class='op'>=</span> <span class='st'>"pairwise"</span><span class='op'>)</span></span>
-<span><span class='va'>corr</span></span></code></pre>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>corr</span>, caption <span class='op'>=</span> <span class='st'>"Table 1. Correlation between proportion of seats taken by women in parliaments and female labor force participation"</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Correlation Coefficient"</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>[1] 0.303058</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 1: </span>Table 1. Correlation between proportion of seats taken by women in parliaments and female labor force participation</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Correlation Coefficient</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.3</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Plotting relationship by regime type</span></span>
 <span><span class='va'>plot3</span> <span class='op'>&lt;-</span> <span class='va'>join_wdi_pol</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>regime_type <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
 <span>    <span class='va'>polity_score</span> <span class='op'>&lt;</span> <span class='op'>-</span><span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Authoritarian"</span>,</span>
 <span>    <span class='va'>polity_score</span> <span class='op'>&gt;=</span> <span class='op'>-</span><span class='fl'>5</span> <span class='op'>&amp;</span> <span class='va'>polity_score</span> <span class='op'>&lt;</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Anocracy"</span>,</span>
@@ -1666,15 +1683,51 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_seats_women</span>, y <span class='op'>=</span> <span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>regime_type</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Proportion of Women in National Parliament"</span>,</span>
 <span>       y <span class='op'>=</span> <span class='st'>"Labor Force Participation of Females"</span>,</span>
 <span>       title <span class='op'>=</span> <span class='st'>"Figure 3. Women in Politics and the Economy by Regime Type"</span><span class='op'>)</span></span>
 <span><span class='va'>plot3</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+<img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>corr_regime</span> <span class='op'>&lt;-</span> <span class='va'>join_wdi_pol</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>regime_type <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>polity_score</span> <span class='op'>&lt;</span> <span class='op'>-</span><span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Authoritarian"</span>,</span>
+<span>    <span class='va'>polity_score</span> <span class='op'>&gt;=</span> <span class='op'>-</span><span class='fl'>5</span> <span class='op'>&amp;</span> <span class='va'>polity_score</span> <span class='op'>&lt;</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Anocracy"</span>,</span>
+<span>    <span class='va'>polity_score</span> <span class='op'>&gt;</span> <span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Democracy"</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>regime_type</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>prop_seats_women</span>, <span class='va'>labor_female</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>corr_regime</span>, caption <span class='op'>=</span> <span class='st'>"Table 2. Correlation cefficient by regime type"</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Regime Type"</span>, <span class='st'>"Correlation Coefficient"</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
 </div>
-<p>Figure 3 shows the correlation between the proportion of seats held by women in parliament and the labor force participation of women by regime type determined by the polity score. The graph indicates a weak positive correlation between the two variables across all types of regimes. This implies that women’s political participation will positively correlate with women’s economic participation in authoritarian regimes as well as in democracies. Thus, though a causal relationship between the two variables cannot be established, women’s political participation may be a good indicator for women’s economic participation and vice versa.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-6">Table 2: </span>Table 2. Correlation cefficient by regime type</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Regime Type</th>
+<th style="text-align: right;">Correlation Coefficient</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Anocracy</td>
+<td style="text-align: right;">0.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Authoritarian</td>
+<td style="text-align: right;">0.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Democracy</td>
+<td style="text-align: right;">0.18</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Running regressions</span></span>
@@ -1702,6 +1755,99 @@ Residual standard error: 16.02 on 3277 degrees of freedom
 Multiple R-squared:  0.09184,   Adjusted R-squared:  0.09157 
 F-statistic: 331.4 on 1 and 3277 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>var_label</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span>  <span class='st'>"prop_seats_women"</span> <span class='op'>=</span> <span class='st'>"Proportion of female seats in parliament"</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit1</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span>,</span>
+<span>                           coef_map <span class='op'>=</span> <span class='va'>var_label</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:center;">
+47.440
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.506
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Proportion of female seats in parliament
+</td>
+<td style="text-align:center;">
+0.470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.026
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+3279
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.092
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.092
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>labor_female</span> <span class='op'>~</span> <span class='va'>prop_seats_women</span> <span class='op'>+</span> <span class='va'>polity_score</span>, data <span class='op'>=</span> <span class='va'>join_wdi_pol</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span></span></code></pre>
 </div>
@@ -1726,6 +1872,122 @@ Residual standard error: 16.66 on 1366 degrees of freedom
   (4490 observations deleted due to missingness)
 Multiple R-squared:  0.1247,    Adjusted R-squared:  0.1234 
 F-statistic: 97.33 on 2 and 1366 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>var_label</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span>  <span class='st'>"prop_seats_women"</span> <span class='op'>=</span> <span class='st'>"Proportion of female seats in parliament"</span>,</span>
+<span>  <span class='st'>"polity_score"</span> <span class='op'>=</span> <span class='st'>"Polity score"</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit2</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span>,</span>
+<span>                           coef_map <span class='op'>=</span> <span class='va'>var_label</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:center;">
+42.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.854
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Proportion of female seats in parliament
+</td>
+<td style="text-align:center;">
+0.449
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.041
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Polity score
+</td>
+<td style="text-align:center;">
+0.562
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.068
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+1369
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.123
+</td>
+</tr>
+</tbody>
+</table>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>labor_female</span> <span class='op'>~</span> <span class='va'>prop_seats_women</span> <span class='op'>+</span> <span class='va'>polity_score</span> <span class='op'>+</span> <span class='va'>GDPpc</span>, data <span class='op'>=</span> <span class='va'>join_wdi_pol</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit3</span><span class='op'>)</span></span></code></pre>
@@ -1752,29 +2014,6 @@ Residual standard error: 15.81 on 1300 degrees of freedom
   (4555 observations deleted due to missingness)
 Multiple R-squared:  0.1754,    Adjusted R-squared:  0.1735 
 F-statistic: 92.19 on 3 and 1300 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>labor_female</span> <span class='op'>~</span> <span class='va'>GDPpc</span>, data <span class='op'>=</span> <span class='va'>join_wdi_pol</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit4</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>
-Call:
-lm(formula = labor_female ~ GDPpc, data = join_wdi_pol)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--46.008  -9.698   2.188  11.516  39.692 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 5.180e+01  2.942e-01  176.07   &lt;2e-16 ***
-GDPpc       2.170e-04  1.453e-05   14.93   &lt;2e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 16.6 on 4709 degrees of freedom
-  (1148 observations deleted due to missingness)
-Multiple R-squared:  0.04519,   Adjusted R-squared:  0.04499 
-F-statistic: 222.9 on 1 and 4709 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>var_label</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
 <span>  <span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
@@ -1914,6 +2153,122 @@ R2 Adj.
 </tr>
 </tbody>
 </table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>labor_female</span> <span class='op'>~</span> <span class='va'>GDPpc</span>, data <span class='op'>=</span> <span class='va'>join_wdi_pol</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit4</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = labor_female ~ GDPpc, data = join_wdi_pol)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-46.008  -9.698   2.188  11.516  39.692 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 5.180e+01  2.942e-01  176.07   &lt;2e-16 ***
+GDPpc       2.170e-04  1.453e-05   14.93   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 16.6 on 4709 degrees of freedom
+  (1148 observations deleted due to missingness)
+Multiple R-squared:  0.04519,   Adjusted R-squared:  0.04499 
+F-statistic: 222.9 on 1 and 4709 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>var_label</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span>  <span class='st'>"GDPpc"</span> <span class='op'>=</span> <span class='st'>"GDP per capita"</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit4</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span>,</span>
+<span>                           coef_map <span class='op'>=</span> <span class='va'>var_label</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:center;">
+51.799
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GDP per capita
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+4711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.045
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <p>regression explanation</p>
 <h2 id="conclusion">Conclusion</h2>
@@ -1921,7 +2276,7 @@ R2 Adj.
 <li>a brief (one paragraph) concluding section that summarizes your results, assesses the extent to which you find support for your hypothesis, describes limitations of your analysis and threats to inference, and states how your analysis could be improved (e.g., improved data that would be useful to collect).</li>
 <li>1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
