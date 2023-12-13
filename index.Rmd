@@ -86,8 +86,7 @@ plot1
 
 ## Results
 
-- For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
-2-3 paragraphs (8pts)
+[CORRELATION]
 
 To evaluate the relationship between women's political and economic participation, I use both correlation and a regression model. I first plot and calculate the correlation between 'Proportion of seats held by women in national parliaments' as my independent variable and 'Female labor force participation rate' as my dependent variable. Figure 2 displays a scatterplot of the two variables in which the direction of relationship is positive, suggesting that as the proportion of seats held by women in national parliaments increases, the female labor force participation rate also increases. However, the points on the plot are dispersed rather than concentrated, suggesting a weak relationship between the two variables. Most of the points are clustered in the 0-20% and 20-40% range of the proportion of seats held by women in national parliaments, whereas the rate of female participation in the labor force seems to be scattered mostly in the 25-75% range. One outlier sits at over 60% of the proportion of women in seats of parliament. A line of best fit is added to summarize this general trend in the data, which also indicates a meager positive relationship between the two variables.
 
@@ -143,7 +142,7 @@ plot3
 ```
 
 
-I also calculate the correlation coefficient for each regime type, as displayed in Table 2. The correlation between the proportion of seats held by women in national parliaments and female labor force participation rate is highest for authoritarian regimes at 0.47 and lowest for democracies at 0.18. The correlation coefficient is 0.21 for anocracies. Across all regime types, there seems to be a general positive relationship between my two variables. However, the findings counter my hypothesis that the relationship between women's political and economic participation will be weakest under authoritarian regimes. Contrary to my original hypothesis, the correlation between my two variables seems weakest in democracies.
+I also calculate the correlation coefficient for each regime type, as displayed in Table 2. The correlation between the proportion of seats held by women in national parliaments and female labor force participation rate is highest for authoritarian regimes at 0.47 and lowest for democracies at 0.18. The correlation coefficient is 0.21 for anocracies. Across all regime types, there seems to be a general positive relationship between my two variables. However, the findings counter my hypothesis that the relationship between women's political and economic participation will be weakest under authoritarian regimes. Contrary to my original hypothesis, the correlation between my two variables seems weakest in democracies. Additionally, this correlation does not necessarily indicate a causal relationship between the two variables, although an increase in one seems to correlate with an increase in the other to an extent.
 
 
 ```{r}
@@ -160,6 +159,10 @@ corr_regime <- join_wdi_pol |>
 knitr::kable(corr_regime, caption = "Correlation cefficient by regime type", col.names = c("Regime Type", "Correlation Coefficient"), digits = 2)
 ```
 
+
+[REGRESSION]
+
+I also evaluate the relationship between my two variables using multiple regressions. First, I run a regression of the rate of labor force participation of females (`labor_female`) as the dependent variable and the proportion of seats taken by women in national parliaments (`prop_seats_women`). The intercept coefficient is 47.4, indicating that when X = 0, meaning the proportion of seats held by women in parliaments is 0, the rate of female labor participation is 47.4, on average. The estimated coefficient on `prop_seats_women` is 0.47, indicating that for each percentage point increase in the proportion of seats held by women in parliaments, the female labor force participation rate increases by 0.47 percentage points, on average. When setting alpha to 0.05, this increase is statistically significant as the p-value for `prop_seats_women` coefficient is less than 0.001. However, the R-squared for this model is 0.092, which suggests that the model is not an appropriate fit for the data.
 
 
 ```{r}
@@ -178,7 +181,12 @@ modelsummary::modelsummary(fit1,
                                          "p = {p.value}"),
                            gof_map = c("nobs", "r.squared", "adj.r.squared"),
                            coef_map = var_label)
+```
 
+
+Second, I run a regression with the same dependent and independent variables, but with an additional covariate of polity score (`polity_score`). When holding polity score constant, the intercept coefficient decreases from 47.4 to 42, indicating that when the proportion of seats held by women in parliaments is 0, and polity score is 0, the rate of female labor participation is 42, on average. The estimated coefficient on `prop_seats_women` also decreases from 0.47 0.45, indicating that for each percentage point increase in the proportion of seats held by women in parliaments, the female labor force participation rate increases by 0.45 percentage points, on average, holding constant the polity score. When setting alpha to 0.05, the second model suggests that this increase is statistically significant as the p-value for `prop_seats_women` coefficient is less than 0.001. This multiple regression seems to be a better fit to the data, as the R-squared increases from 0.092 to 0.125, with an adjusted R-squared of 0.123. 
+
+```{r}
 fit2 <- lm(labor_female ~ prop_seats_women + polity_score, data = join_wdi_pol)
 summary(fit2)
 
@@ -193,7 +201,12 @@ modelsummary::modelsummary(fit2,
                                          "p = {p.value}"),
                            gof_map = c("nobs", "r.squared", "adj.r.squared"),
                            coef_map = var_label)
+```
 
+
+I run a third regression with the same dependent and independent variables, but with additional covariates of polity score (`polity_score`) and GDP per capita (`GDPpc`). When holding polity score and GDP per capita constant, the intercept coefficient decreases to 41.47, indicating that when the proportion of seats held by women in parliaments is 0, polity score is 0, and GDP per capita is 0, the rate of female labor participation is 41.47, on average. The estimated coefficient on `prop_seats_women` also decreases to around 0.35, indicating that for each percentage point increase in the proportion of seats held by women in parliaments, the female labor force participation rate increases by 0.35 percentage points, on average, holding constant the polity score and GDP per capita. When setting alpha to 0.05, the third model suggests that this increase is statistically significant as the p-value for `prop_seats_women` coefficient is less than 0.001. This multiple regression seems to be the best fit to the data, as the R-squared increases to 0.175, with an adjusted R-squared of 0.174. 
+
+```{r}
 fit3 <- lm(labor_female ~ prop_seats_women + polity_score + GDPpc, data = join_wdi_pol)
 summary(fit3)
 
@@ -209,21 +222,9 @@ modelsummary::modelsummary(fit3,
                                          "p = {p.value}"),
                            gof_map = c("nobs", "r.squared", "adj.r.squared"),
                            coef_map = var_label)
-
-fit4 <- lm(labor_female ~ GDPpc, data = join_wdi_pol)
-summary(fit4)
-
-var_label <- c(
-  "(Intercept)" = "Intercept",
-  "GDPpc" = "GDP per capita"
-)
-
-modelsummary::modelsummary(fit4,
-                           statistic = c("s.e. = {std.error}",
-                                         "p = {p.value}"),
-                           gof_map = c("nobs", "r.squared", "adj.r.squared"),
-                           coef_map = var_label)
 ```
+
+While the regression models suggest that an increase in the proportion of seats held by women in national parliaments may be associated with an increase in female labor force participation rates, it is difficult to establish that the coefficient represents a casual effect because of potential confounders that may not be controlled for in the proposed regressions. Moreover, the R-squared for the regressions are fairly low, suggesting that the models are not fit for the data. However, it seems that the regression model befits the data as polity scores and GDP per capita are held fixed, suggesting that the two are potential confounders that require statistical control.
 
 
 ## Conclusion

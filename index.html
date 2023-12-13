@@ -1625,10 +1625,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
 <h2 id="results">Results</h2>
-<ul>
-<li>For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
-2-3 paragraphs (8pts)</li>
-</ul>
+<p>[CORRELATION]</p>
 <p>To evaluate the relationship between women’s political and economic participation, I use both correlation and a regression model. I first plot and calculate the correlation between ‘Proportion of seats held by women in national parliaments’ as my independent variable and ‘Female labor force participation rate’ as my dependent variable. Figure 2 displays a scatterplot of the two variables in which the direction of relationship is positive, suggesting that as the proportion of seats held by women in national parliaments increases, the female labor force participation rate also increases. However, the points on the plot are dispersed rather than concentrated, suggesting a weak relationship between the two variables. Most of the points are clustered in the 0-20% and 20-40% range of the proportion of seats held by women in national parliaments, whereas the rate of female participation in the labor force seems to be scattered mostly in the 25-75% range. One outlier sits at over 60% of the proportion of women in seats of parliament. A line of best fit is added to summarize this general trend in the data, which also indicates a meager positive relationship between the two variables.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1691,7 +1688,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
-<p>I also calculate the correlation coefficient for each regime type, as displayed in Table 2. The correlation between the proportion of seats held by women in national parliaments and female labor force participation rate is highest for authoritarian regimes at 0.47 and lowest for democracies at 0.18. The correlation coefficient is 0.21 for anocracies. Across all regime types, there seems to be a general positive relationship between my two variables. However, the findings counter my hypothesis that the relationship between women’s political and economic participation will be weakest under authoritarian regimes. Contrary to my original hypothesis, the correlation between my two variables seems weakest in democracies.</p>
+<p>I also calculate the correlation coefficient for each regime type, as displayed in Table 2. The correlation between the proportion of seats held by women in national parliaments and female labor force participation rate is highest for authoritarian regimes at 0.47 and lowest for democracies at 0.18. The correlation coefficient is 0.21 for anocracies. Across all regime types, there seems to be a general positive relationship between my two variables. However, the findings counter my hypothesis that the relationship between women’s political and economic participation will be weakest under authoritarian regimes. Contrary to my original hypothesis, the correlation between my two variables seems weakest in democracies. Additionally, this correlation does not necessarily indicate a causal relationship between the two variables, although an increase in one seems to correlate with an increase in the other to an extent.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>corr_regime</span> <span class='op'>&lt;-</span> <span class='va'>join_wdi_pol</span> <span class='op'>|&gt;</span></span>
@@ -1730,6 +1727,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </tbody>
 </table>
 </div>
+<p>[REGRESSION]</p>
+<p>I also evaluate the relationship between my two variables using multiple regressions. First, I run a regression of the rate of labor force participation of females (<code>labor_female</code>) as the dependent variable and the proportion of seats taken by women in national parliaments (<code>prop_seats_women</code>). The intercept coefficient is 47.4, indicating that when X = 0, meaning the proportion of seats held by women in parliaments is 0, the rate of female labor participation is 47.4, on average. The estimated coefficient on <code>prop_seats_women</code> is 0.47, indicating that for each percentage point increase in the proportion of seats held by women in parliaments, the female labor force participation rate increases by 0.47 percentage points, on average. When setting alpha to 0.05, this increase is statistically significant as the p-value for <code>prop_seats_women</code> coefficient is less than 0.001. However, the R-squared for this model is 0.092, which suggests that the model is not an appropriate fit for the data.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Running regressions</span></span>
@@ -1849,6 +1848,9 @@ R2 Adj.
 </tr>
 </tbody>
 </table>
+</div>
+<p>Second, I run a regression with the same dependent and independent variables, but with an additional covariate of polity score (<code>polity_score</code>). When holding polity score constant, the intercept coefficient decreases from 47.4 to 42, indicating that when the proportion of seats held by women in parliaments is 0, and polity score is 0, the rate of female labor participation is 42, on average. The estimated coefficient on <code>prop_seats_women</code> also decreases from 0.47 0.45, indicating that for each percentage point increase in the proportion of seats held by women in parliaments, the female labor force participation rate increases by 0.45 percentage points, on average, holding constant the polity score. When setting alpha to 0.05, the second model suggests that this increase is statistically significant as the p-value for <code>prop_seats_women</code> coefficient is less than 0.001. This multiple regression seems to be a better fit to the data, as the R-squared increases from 0.092 to 0.125, with an adjusted R-squared of 0.123.</p>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>labor_female</span> <span class='op'>~</span> <span class='va'>prop_seats_women</span> <span class='op'>+</span> <span class='va'>polity_score</span>, data <span class='op'>=</span> <span class='va'>join_wdi_pol</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span></span></code></pre>
@@ -1990,6 +1992,9 @@ R2 Adj.
 </tr>
 </tbody>
 </table>
+</div>
+<p>I run a third regression with the same dependent and independent variables, but with additional covariates of polity score (<code>polity_score</code>) and GDP per capita (<code>GDPpc</code>). When holding polity score and GDP per capita constant, the intercept coefficient decreases to 41.47, indicating that when the proportion of seats held by women in parliaments is 0, polity score is 0, and GDP per capita is 0, the rate of female labor participation is 41.47, on average. The estimated coefficient on <code>prop_seats_women</code> also decreases to around 0.35, indicating that for each percentage point increase in the proportion of seats held by women in parliaments, the female labor force participation rate increases by 0.35 percentage points, on average, holding constant the polity score and GDP per capita. When setting alpha to 0.05, the third model suggests that this increase is statistically significant as the p-value for <code>prop_seats_women</code> coefficient is less than 0.001. This multiple regression seems to be the best fit to the data, as the R-squared increases to 0.175, with an adjusted R-squared of 0.174.</p>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>labor_female</span> <span class='op'>~</span> <span class='va'>prop_seats_women</span> <span class='op'>+</span> <span class='va'>polity_score</span> <span class='op'>+</span> <span class='va'>GDPpc</span>, data <span class='op'>=</span> <span class='va'>join_wdi_pol</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit3</span><span class='op'>)</span></span></code></pre>
@@ -2155,129 +2160,14 @@ R2 Adj.
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>labor_female</span> <span class='op'>~</span> <span class='va'>GDPpc</span>, data <span class='op'>=</span> <span class='va'>join_wdi_pol</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit4</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>
-Call:
-lm(formula = labor_female ~ GDPpc, data = join_wdi_pol)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--46.008  -9.698   2.188  11.516  39.692 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 5.180e+01  2.942e-01  176.07   &lt;2e-16 ***
-GDPpc       2.170e-04  1.453e-05   14.93   &lt;2e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 16.6 on 4709 degrees of freedom
-  (1148 observations deleted due to missingness)
-Multiple R-squared:  0.04519,   Adjusted R-squared:  0.04499 
-F-statistic: 222.9 on 1 and 4709 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>var_label</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
-<span>  <span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
-<span>  <span class='st'>"GDPpc"</span> <span class='op'>=</span> <span class='st'>"GDP per capita"</span></span>
-<span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit4</span>,</span>
-<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
-<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
-<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span>,</span>
-<span>                           coef_map <span class='op'>=</span> <span class='va'>var_label</span><span class='op'>)</span></span></code></pre>
-</div>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:center;">
- (1)
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Intercept
-</td>
-<td style="text-align:center;">
-51.799
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-s.e. = 0.294
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-p = &lt;0.001
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-GDP per capita
-</td>
-<td style="text-align:center;">
-0.000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-s.e. = 0.000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;box-shadow: 0px 1.5px">
-</td>
-<td style="text-align:center;box-shadow: 0px 1.5px">
-p = &lt;0.001
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Num.Obs.
-</td>
-<td style="text-align:center;">
-4711
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-R2
-</td>
-<td style="text-align:center;">
-0.045
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-R2 Adj.
-</td>
-<td style="text-align:center;">
-0.045
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>While the regression models suggest that an increase in the proportion of seats held by women in national parliaments may be associated with an increase in female labor force participation rates, it is difficult to establish that the coefficient represents a casual effect because of potential confounders that may not be controlled for in the proposed regressions. Moreover, the R-squared for the regressions are fairly low, suggesting that the models are not fit for the data. However, it seems that the regression model befits the data as polity scores and GDP per capita are held fixed, suggesting that the two are potential confounders that require statistical control.</p>
 <h2 id="conclusion">Conclusion</h2>
 <ul>
 <li>a brief (one paragraph) concluding section that summarizes your results, assesses the extent to which you find support for your hypothesis, describes limitations of your analysis and threats to inference, and states how your analysis could be improved (e.g., improved data that would be useful to collect).</li>
 <li>1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
